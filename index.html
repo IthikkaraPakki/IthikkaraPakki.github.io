@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-primary': '#101820',
+                        'bg-secondary': '#1a2028',
+                        'accent': '#F2AA4C',
+                        'accent-red': '#FF6B6B',
+                        'border-col': '#2a3038',
+                        'text-pri': '#e0e0e0',
+                        'text-sec': '#b0b0b0',
+                    },
+                    fontFamily: {
+                        mono: ['"JetBrains Mono"', '"Fira Code"', 'monospace'],
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            from: { opacity: '0', transform: 'translateY(50px)' },
+                            to:   { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        bounce2: {
+                            '0%,20%,50%,80%,100%': { transform: 'translateX(-50%) translateY(0)' },
+                            '40%':                  { transform: 'translateX(-50%) translateY(-10px)' },
+                        },
+                        shimmer: {
+                            '0%':   { backgroundPosition: '-200% center' },
+                            '100%': { backgroundPosition: '200% center' },
+                        },
+                        pulseGlow: {
+                            '0%,100%': { boxShadow: '0 0 8px 2px rgba(242,170,76,0.3)' },
+                            '50%':     { boxShadow: '0 0 20px 6px rgba(242,170,76,0.6)' },
+                        },
+                    },
+                    animation: {
+                        fadeInUp:  'fadeInUp 1.5s ease forwards',
+                        bounce2:   'bounce2 2s infinite',
+                        shimmer:   'shimmer 3s linear infinite',
+                        pulseGlow: 'pulseGlow 2s ease-in-out infinite',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+
+        /* Nav underline animation — needs pseudo-element */
+        nav a { position: relative; transition: color 0.3s ease; }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: #F2AA4C;
+            transition: width 0.3s ease;
+        }
+        nav a:hover::after { width: 100%; }
+
+        /* h2 underline accent */
+        h2.section-title { position: relative; padding-bottom: 20px; }
+        h2.section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 80px; height: 3px;
+            background: linear-gradient(90deg, #F2AA4C, #FF6B6B);
+            border-radius: 2px;
+        }
+
+        /* Gradient text for h1 */
+        .gradient-title {
+            background: linear-gradient(135deg, #FF6B6B 0%, #F2AA4C 50%, #FF6B6B 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        /* Card glow on hover */
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(242,170,76,0.15);
+            border-color: #F2AA4C;
+        }
+
+        /* Glassmorphism cards */
+        .glass-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Tag glow */
+        .tag-pill {
+            background: rgba(242,170,76,0.08);
+            border: 1px solid rgba(242,170,76,0.3);
+            color: #F2AA4C;
+            transition: all 0.2s ease;
+        }
+        .tag-pill:hover {
+            background: rgba(242,170,76,0.18);
+            box-shadow: 0 0 8px rgba(242,170,76,0.3);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce2 2s infinite;
+        }
+        #canvas.hide    { opacity: 0; transition: opacity 1s ease; }
+        #landingImage.show { opacity: 1; }
+
+        /* Section scanline texture overlay */
+        .scanlines::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.06) 2px,
+                rgba(0,0,0,0.06) 4px
+            );
+            pointer-events: none;
+            border-radius: inherit;
+        }
+
+        /* Profile ring pulse */
+        .profile-ring {
+            animation: pulseGlow 2.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-bg-primary text-text-pri overflow-x-hidden">
+
+    <!-- Top nav (absolute, top-right) -->
+    <div class="absolute top-0 right-0 p-5 z-[1000]">
+        <a href="#about"
+           class="text-text-sec font-medium text-[0.95em] px-5 py-2.5 rounded
+                  bg-bg-primary/80 backdrop-blur-sm
+                  hover:text-accent hover:bg-white/10
+                  transition-all duration-300">
+            // About
+        </a>
+    </div>
+
+    <!-- HERO -->
+    <header class="relative h-screen flex items-center justify-center text-center overflow-hidden bg-bg-primary px-5">
+        <canvas id="canvas" class="absolute inset-0 w-full h-full bg-bg-primary transition-opacity duration-1000 z-[2]"></canvas>
+        <img id="landingImage"
+             src="spacex2.jpg"
+             alt="Landing Background"
+             loading="lazy"
+             class="absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-1000 z-[1]">
+
+        <div class="relative z-10 w-full animate-fadeInUp">
+            <h1 class="gradient-title font-bold tracking-tight leading-none mb-4
+                        text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+                Bilbert's Portfolio
+            </h1>
+            <p class="text-text-pri tracking-widest text-sm sm:text-base md:text-xl px-2">
+                Reaching Rocket Science........
+            </p>
+
+            <!-- Gradient accent line under subtitle -->
+            <div class="mx-auto mt-6 h-px w-48 bg-gradient-to-r from-transparent via-accent to-transparent opacity-60"></div>
+        </div>
+
+        <div class="scroll-indicator text-accent-red text-3xl cursor-pointer z-10 p-4"
+             onclick="document.querySelector('#projects').scrollIntoView({behavior:'smooth'})">↓</div>
+    </header>
+
+    <!-- STICKY NAV -->
+    <nav class="bg-bg-primary/90 backdrop-blur-md sticky top-0 z-[100] border-b border-border-col">
+        <ul class="flex justify-center flex-wrap gap-4 py-4 list-none m-0 p-0">
+            <li>
+                <a href="#projects"
+                   class="text-text-sec font-semibold text-[0.9em] inline-block px-3 py-2 hover:text-accent transition-colors duration-300">
+                    // Projects
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6">
+
+        <!-- ── PROJECTS ── -->
+        <section id="projects"
+                 class="relative scanlines bg-bg-secondary my-10 px-6 sm:px-12 py-16 rounded-2xl
+                        shadow-[0_10px_40px_rgba(0,0,0,0.3)] border border-border-col overflow-hidden">
+
+            <h2 class="section-title text-accent text-center font-bold mb-12
+                        text-2xl sm:text-3xl md:text-4xl">
+                Embedded Controls      
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+
+                <!-- Card 1 -->
+                <div class="project-card glass-card rounded-xl overflow-hidden border border-border-col flex flex-col shadow-[0_5px_20px_rgba(0,0,0,0.3)]">
+                    <div class="w-full h-48 bg-black/30 flex items-center justify-center text-accent text-5xl flex-shrink-0 overflow-hidden">
+                        <img src="FOC1.png" alt="FOC Project" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-text-pri font-semibold text-lg mb-3">Field Oriented Control - BLDC</h3>
+                        <p class="text-text-sec text-sm leading-relaxed mb-5 flex-grow">Speed control of BLDC motor using FOC for increased efficiency and performance.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">STM32</span>
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">Embedded_C</span>
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">RTOS</span>
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">AS5600</span>
+                        </div>
+                        <div class="flex gap-3 flex-wrap">
+                            <a href="https://github.com/IthikkaraPakki/Closed-Loop-FOC-using-STM32G431-and-AS5600"
+                               class="flex-1 text-center py-2.5 px-3 bg-accent text-white rounded-lg text-sm font-medium
+                                      hover:-translate-y-0.5 hover:brightness-110 hover:shadow-lg transition-all duration-300 whitespace-nowrap">
+                                view_code()
+                            </a>
+                            <a href="https://www.linkedin.com/posts/bilbert-george-85a505261_foc-freertos-stm32g4-activity-7439286942732775425-5cKZ"
+                               class="flex-1 text-center py-2.5 px-3 bg-transparent text-accent border-2 border-accent rounded-lg text-sm font-medium
+                                      hover:bg-accent hover:text-white transition-all duration-300 whitespace-nowrap">
+                                view_project()
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="project-card glass-card rounded-xl overflow-hidden border border-border-col flex flex-col shadow-[0_5px_20px_rgba(0,0,0,0.3)]">
+                    <div class="w-full h-48 bg-black/30 flex items-center justify-center text-accent text-5xl flex-shrink-0 overflow-hidden">
+                        <img src="Host_target.gif" alt="FOC Project" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-text-pri font-semibold text-lg mb-3">Two Model approach for embedded control rapid prototyping</h3>
+                        <p class="text-text-sec text-sm leading-relaxed mb-5 flex-grow">Host-Target model approach in SIMULINK reduces load on the target hardware and enables faster signal sampling rates</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">SIMULINK</span>
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">Code generation</span>
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">Embedded Coder</span>
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">STM32G431</span>
+                        </div>
+                        <div class="flex gap-3 flex-wrap">
+                            <a href="https://drive.google.com/drive/folders/1FTjoqRoatGKaQ5EluFo49dGCAi1lMlVn?usp=sharing"
+                               class="flex-1 text-center py-2.5 px-3 bg-accent text-white rounded-lg text-sm font-medium
+                                      hover:-translate-y-0.5 hover:brightness-110 hover:shadow-lg transition-all duration-300 whitespace-nowrap">
+                                view_files()
+                            </a>
+                            <a href="https://www.linkedin.com/posts/bilbert-george-85a505261_embeddedsystems-stm32-simulink-ugcPost-7406220622055399425-5moj"
+                               class="flex-1 text-center py-2.5 px-3 bg-transparent text-accent border-2 border-accent rounded-lg text-sm font-medium
+                                      hover:bg-accent hover:text-white transition-all duration-300 whitespace-nowrap">
+                                view_project()
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="project-card glass-card rounded-xl overflow-hidden border border-border-col flex flex-col shadow-[0_5px_20px_rgba(0,0,0,0.3)]">
+                    <div class="w-full h-48 bg-black/30 flex items-center justify-center text-accent text-5xl flex-shrink-0 overflow-hidden">
+                        <img src="Current_sensing.png" alt="Current Sensing Project" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-text-pri font-semibold text-lg mb-3">Low-side Current Sensing - BLDC</h3>
+                        <p class="text-text-sec text-sm leading-relaxed mb-5 flex-grow">Current sensing for safety and torque control in motor drive applications.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">STM32</span>
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">B-G431-ESC1</span>
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">BLDC</span>
+                        </div>
+                        <div class="flex gap-3 flex-wrap">
+                            <a href="https://github.com/IthikkaraPakki/Low-Side-Current-Sesning-on-B-G431CB-ESC1-Open-Loop-Control"
+                               class="flex-1 text-center py-2.5 px-3 bg-accent text-white rounded-lg text-sm font-medium
+                                      hover:-translate-y-0.5 hover:brightness-110 hover:shadow-lg transition-all duration-300 whitespace-nowrap">
+                                view_code()
+                            </a>
+                            <a href="https://github.com/IthikkaraPakki/Low-Side-Current-Sesning-on-B-G431CB-ESC1-Open-Loop-Control/blob/main/README.md"
+                               class="flex-1 text-center py-2.5 px-3 bg-transparent text-accent border-2 border-accent rounded-lg text-sm font-medium
+                                      hover:bg-accent hover:text-white transition-all duration-300 whitespace-nowrap">
+                                view_details()
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="project-card glass-card rounded-xl overflow-hidden border border-border-col flex flex-col shadow-[0_5px_20px_rgba(0,0,0,0.3)]">
+                    <div class="w-full h-48 bg-black/30 flex items-center justify-center text-accent text-5xl flex-shrink-0 overflow-hidden">
+                        <img src="Angle.png" alt="Absolute Angle Project" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-text-pri font-semibold text-lg mb-3">Sensing absolute angle - BLDC</h3>
+                        <p class="text-text-sec text-sm leading-relaxed mb-5 flex-grow">Absolute angle sensors sense rotor position, used in closed-loop motor control.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">STM32</span>
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">Embedded C</span>
+                            <span class="tag-pill text-xs px-2.5 py-1 rounded-md">AS5600</span>
+                        </div>
+                        <div class="flex gap-3 flex-wrap">
+                            <a href="https://github.com/IthikkaraPakki/Absolute-angle-using-AS5600-STM32"
+                               class="flex-1 text-center py-2.5 px-3 bg-accent text-white rounded-lg text-sm font-medium
+                                      hover:-translate-y-0.5 hover:brightness-110 hover:shadow-lg transition-all duration-300 whitespace-nowrap">
+                                view_code()
+                            </a>
+                            <a href="https://github.com/IthikkaraPakki/Absolute-angle-using-AS5600-STM32/blob/main/README.md"
+                               class="flex-1 text-center py-2.5 px-3 bg-transparent text-accent border-2 border-accent rounded-lg text-sm font-medium
+                                      hover:bg-accent hover:text-white transition-all duration-300 whitespace-nowrap">
+                                view_details()
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── ABOUT ── -->
+        <section id="about"
+                 class="bg-bg-secondary my-10 px-6 sm:px-12 py-16 rounded-2xl text-center
+                        shadow-[0_10px_40px_rgba(0,0,0,0.3)] border border-border-col">
+
+            <h2 class="section-title text-accent text-center font-bold mb-12
+                        text-2xl sm:text-3xl md:text-4xl">
+                About Me
+            </h2>
+
+            <!-- Profile avatar with pulsing glow ring -->
+            <div class="profile-ring w-36 h-36 sm:w-48 sm:h-48 rounded-full bg-gradient-to-br from-accent to-accent-red
+                        flex items-center justify-center text-white font-bold text-4xl sm:text-5xl
+                        mx-auto mb-10 border-2 border-border-col select-none">
+                BG
+            </div>
+
+            <div class="max-w-2xl mx-auto space-y-5">
+                <p class="text-text-sec text-sm sm:text-base leading-relaxed text-left">
+                    Hello! I'm an electricial engineer specializing in embedded systems and control engineering. I love working on projects that bridge the gap between software and hardware, creating intelligent systems that interact with the physical world.
+                </p>
+                <p class="text-text-sec text-sm sm:text-base leading-relaxed text-left">
+                    My expertise lies in developing efficient embedded control software. Whether it's programming microcontrollers, designing control systems, or optimizing real-time performance, I'm always excited to tackle challenging engineering problems.
+                </p>
+                <p class="text-text-sec text-sm sm:text-base leading-relaxed text-left">
+                    When I'm not coding or designing control systems, you can find me enjoying nature and exploring new places.
+                </p>
+            </div>
+
+            <!-- Gradient divider -->
+            <div class="mx-auto my-10 h-px w-64 bg-gradient-to-r from-transparent via-accent/50 to-transparent"></div>
+
+            <!-- Social links -->
+            <div class="flex justify-center flex-wrap gap-4 mt-6">
+                <a href="https://www.linkedin.com/in/bilbert-george-85a505261" target="_blank"
+                   class="min-w-[140px] text-center py-3 px-6 rounded-lg text-sm font-medium text-white
+                          bg-gradient-to-r from-accent to-accent-red
+                          hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(242,170,76,0.4)]
+                          transition-all duration-300">
+                    linkedin()
+                </a>
+                <a href="https://github.com/IthikkaraPakki?tab=repositories" target="_blank"
+                   class="min-w-[140px] text-center py-3 px-6 rounded-lg text-sm font-medium text-white
+                          bg-gradient-to-r from-accent to-accent-red
+                          hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(242,170,76,0.4)]
+                          transition-all duration-300">
+                    github()
+                </a>
+                <a href="mailto:bilbert.work@gmail.com"
+                   class="min-w-[140px] text-center py-3 px-6 rounded-lg text-sm font-medium
+                          bg-transparent text-accent border-2 border-accent
+                          hover:bg-accent hover:text-white hover:-translate-y-1
+                          hover:shadow-[0_8px_20px_rgba(242,170,76,0.3)]
+                          transition-all duration-300">
+                    email()
+                </a>
+            </div>
+        </section>
+
+    </div><!-- /container -->
+
+    <!-- FOOTER -->
+    <footer class="bg-black/30 text-text-sec text-center py-10 mt-16 border-t border-border-col">
+        <p class="text-sm mb-2">&copy; 2026 // All rights reserved</p>
+        <p class="text-xs tracking-widest text-text-sec/60">Embedded Systems &nbsp;|&nbsp; Control Engineering &nbsp;|&nbsp; Innovation</p>
+        <!-- Gradient accent line -->
+        <div class="mx-auto mt-6 h-px w-48 bg-gradient-to-r from-transparent via-accent/40 to-transparent"></div>
+    </footer>
+
+    <!-- CANVAS ANIMATION (unchanged) -->
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const landingImage = document.getElementById('landingImage');
+
+        let gridSize, spacing, animationRunning = true, angleX = 0, angleY = 0;
+
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gridSize = window.innerWidth < 600 ? 20 : 30;
+            spacing  = window.innerWidth < 600 ? 18 : 25;
+        }
+
+        setCanvasSize();
+        window.addEventListener('resize', setCanvasSize);
+
+        function project3D(x, y, z) {
+            const scale = 400 / (400 + z);
+            return { x: x * scale + canvas.width / 2, y: y * scale + canvas.height / 2, scale };
+        }
+
+        function animate() {
+            if (!animationRunning) return;
+            ctx.fillStyle = 'rgba(16, 24, 32, 0.15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const points = [];
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = 0; j < gridSize; j++) {
+                    let x = (i - gridSize / 2) * spacing;
+                    let y = (j - gridSize / 2) * spacing;
+                    let z = Math.sin(Math.sqrt(x*x + y*y) * 0.02 - angleX * 2) * 50;
+
+                    let cosX = Math.cos(angleX), sinX = Math.sin(angleX);
+                    let ry = y * cosX - z * sinX, rz = y * sinX + z * cosX;
+                    let cosY = Math.cos(angleY), sinY = Math.sin(angleY);
+                    let rx = x * cosY + rz * sinY; rz = -x * sinY + rz * cosY;
+
+                    const p = project3D(rx, ry, rz);
+                    points.push({ x: p.x, y: p.y, scale: p.scale, z: rz });
+                }
+            }
+            points.sort((a, b) => b.z - a.z);
+            points.forEach(point => {
+                ctx.fillStyle = `rgba(242, 170, 76, ${Math.max(0.3, point.scale)})`;
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, Math.max(0.5, point.scale * 2), 0, Math.PI * 2);
+                ctx.fill();
+            });
+            angleX += 0.005; angleY += 0.003;
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        setTimeout(() => {
+            canvas.classList.add('hide');
+            landingImage.classList.add('show');
+            setTimeout(() => { animationRunning = false; }, 1100);
+        }, 5000);
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
