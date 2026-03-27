@@ -136,17 +136,24 @@
         }
 
         /* ── PDF VIEWER ── */
+        /* AFTER */
         .pdf-container {
             width: 100%;
+            max-width: 780px;
+            margin: 0 auto 16px;
             border: 1px solid var(--border);
-            margin-bottom: 16px;
-            background: #fff;
+            background: var(--white);
             position: relative;
+            /* True A4 ratio: 1:1.4142 */
+            aspect-ratio: 1 / 1.4142;
+            overflow: hidden;
         }
 
         .pdf-embed {
+            position: absolute;
+            top: 0; left: 0;
             width: 100%;
-            height: 85vh;
+            height: 100%;
             border: none;
             display: block;
         }
@@ -185,7 +192,6 @@
         .nav-links a { font-size: 0.7rem; }
             .page { padding: 130px 24px 64px; }
             .page-header { flex-direction: column; align-items: flex-start; gap: 24px; }
-            .pdf-embed { height: 60vh; }
         }
 
         @keyframes fadeUp {
@@ -203,10 +209,10 @@
 <nav>
     <a href="portfolio-bw.html" class="nav-name">Bilbert George</a>
     <ul class="nav-links">
-        <li><a href="portfolio-bw.html#home">Home</a></li>
-        <li><a href="portfolio-bw.html#videos">Videos</a></li>
-        <li><a href="portfolio-bw.html#projects">Projects</a></li>
-        <li><a href="portfolio-bw.html#about">About</a></li>
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#videos">Videos</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#about">About</a></li>
         <li><a href="resume.html" class="active">Resume</a></li>
     </ul>
 </nav>
