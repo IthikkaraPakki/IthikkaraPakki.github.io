@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume — Bilbert George</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black:  #0a0a0a;
+            --white:  #f5f5f0;
+            --grey:   #888;
+            --border: #d8d8d4;
+            --serif:  'DM Serif Display', Georgia, serif;
+            --mono:   'DM Mono', 'Courier New', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--white);
+            color: var(--black);
+            font-family: var(--mono);
+            font-size: 14px;
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 48px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-name {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+            color: var(--black);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--grey);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--black); }
+        .nav-links a.active { color: var(--black); border-bottom: 1px solid var(--black); padding-bottom: 2px; }
+
+        /* ── PAGE ── */
+        .page {
+            padding: 120px 48px 96px;
+        }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 48px;
+        }
+
+        .page-title {
+            font-family: var(--serif);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .page-title em {
+            font-style: italic;
+            color: var(--grey);
+        }
+
+        /* ── ACTION BUTTONS ── */
+        .resume-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid var(--black);
+            color: var(--black);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-primary {
+            background: var(--black);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--black);
+        }
+
+        /* ── PDF VIEWER ── */
+        .pdf-container {
+            width: 100%;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            background: #fff;
+            position: relative;
+        }
+
+        .pdf-embed {
+            width: 100%;
+            height: 85vh;
+            border: none;
+            display: block;
+        }
+
+        /* Fallback for browsers that can't embed PDF */
+        .pdf-fallback {
+            display: none;
+            padding: 64px;
+            text-align: center;
+        }
+
+        .pdf-fallback p {
+            color: var(--grey);
+            font-size: 0.82rem;
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .pdf-note {
+            font-size: 0.7rem;
+            color: var(--grey);
+            letter-spacing: 0.08em;
+            margin-top: 12px;
+        }
+
+        /* ── MOBILE NAV ── */
+        @media (max-width: 768px) {
+        /* AFTER */
+        nav {
+            padding: 16px 24px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .nav-links { gap: 16px; flex-wrap: wrap; }
+        .nav-links a { font-size: 0.7rem; }
+            .page { padding: 130px 24px 64px; }
+            .page-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+            .pdf-embed { height: 60vh; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-header { animation: fadeUp 0.7s ease forwards; }
+        .pdf-container { opacity: 0; animation: fadeUp 0.7s ease 0.3s forwards; }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="portfolio-bw.html" class="nav-name">Bilbert George</a>
+    <ul class="nav-links">
+        <li><a href="portfolio-bw.html#home">Home</a></li>
+        <li><a href="portfolio-bw.html#videos">Videos</a></li>
+        <li><a href="portfolio-bw.html#projects">Projects</a></li>
+        <li><a href="portfolio-bw.html#about">About</a></li>
+        <li><a href="resume.html" class="active">Resume</a></li>
+    </ul>
+</nav>
+
+<div class="page">
+
+    <div class="page-header">
+        <h1 class="page-title">
+            My<br><em>Resume</em>
+        </h1>
+        <div class="resume-actions">
+            <!-- Replace the Google Drive link below with your actual resume Google Drive share link -->
+            <a href="https://drive.google.com/file/d/130FT2EX8u5BMK02b4pM2sHvARVp_CGBP/view?usp=sharing"
+               target="_blank" class="btn">
+                ↗ Open in Google Drive
+            </a>
+            <!-- Replace with actual PDF file path once uploaded to GitHub -->
+            <a href="resume.pdf" download class="btn btn-primary">
+                ↓ Download PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="pdf-container">
+        <!--
+            Replace "resume.pdf" below with your actual PDF filename.
+            Upload the PDF to the same GitHub repo folder as index.html.
+
+            For Google Drive embed, replace the src with:
+            https://drive.google.com/file/d/YOUR_FILE_ID/preview
+        -->
+        <!--
+            Replace YOUR_FILE_ID with your Google Drive file ID.
+            Get it from your Drive share link:
+            https://drive.google.com/file/d/YOUR_FILE_ID/view
+            Then use /preview instead of /view below.
+            https://drive.google.com/file/d/130FT2EX8u5BMK02b4pM2sHvARVp_CGBP/view?usp=sharing
+        -->
+        <iframe
+            class="pdf-embed"
+            src="https://drive.google.com/file/d/130FT2EX8u5BMK02b4pM2sHvARVp_CGBP/preview"
+            title="Bilbert George Resume"
+            allow="autoplay">
+        </iframe>
+
+        <!-- Shown on mobile/browsers that block PDF embeds -->
+        <div class="pdf-fallback" id="fallback">
+            <p>PDF preview is not available on this device.<br>
+            Use the buttons above to open in Google Drive or download directly.</p>
+            <a href="https://drive.google.com/file/d/130FT2EX8u5BMK02b4pM2sHvARVp_CGBP/preview"
+               target="_blank" class="btn btn-primary">
+                Open in Google Drive ↗
+            </a>
+        </div>
+    </div>
+    
+
+    <p class="pdf-note">
+        View the full resume above, or
+        <a href="https://drive.google.com/file/d/130FT2EX8u5BMK02b4pM2sHvARVp_CGBP/view?usp=sharing"
+           target="_blank" style="color: var(--black);">open in Google Drive</a>
+        for a larger view.
+    </p>
+
+</div>
+
+<script>
+    /* If iframe fails to load PDF (mobile Safari, etc.), show fallback */
+    const iframe = document.querySelector('.pdf-embed');
+    const fallback = document.getElementById('fallback');
+
+    iframe.addEventListener('error', () => {
+        iframe.style.display = 'none';
+        fallback.style.display = 'block';
+    });
+
+</script>
+
+</body>
+</html>
