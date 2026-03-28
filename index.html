@@ -6,7 +6,7 @@
     <title>Bilbert George</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -17,7 +17,8 @@
             --grey:    #888;
             --border:  #d8d8d4;
             --serif:   'DM Serif Display', Georgia, serif;
-            --mono:    'DM Mono', 'Courier New', monospace;
+            --mono:   'DM Mono', 'Courier New', monospace;
+            --sans:   'DM Sans', sans-serif;
         }
 
         html { scroll-behavior: smooth; }
@@ -276,7 +277,7 @@
         .project-body {}
 
         .project-title {
-            font-family: var(--serif);
+            font-family: var(--sans);
             font-size: 1.4rem;
             letter-spacing: -0.01em;
             margin-bottom: 8px;
@@ -293,7 +294,7 @@
 
         .project-bullets {
             list-style: none;
-            margin-bottom: 14px;
+            margin-bottom: 20px;
             display: flex;
             flex-direction: column;
             gap: 5px;
@@ -314,19 +315,24 @@
             color: var(--border);
         }
 
+        /* AFTER */
         .project-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
+            margin-bottom: 20px;
         }
 
+        /* AFTER */
         .tag {
-            font-size: 0.65rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            border: 1px solid var(--border);
-            padding: 3px 8px;
-            color: var(--grey);
+            font-size: 0.72rem;
+            letter-spacing: 0;
+            text-transform: none;
+            border: 1px solid #bbb;
+            border-radius: 999px;
+            padding: 4px 10px;
+            color: var(--black);
+            background: #e8e8e4;
         }
 
         .project-links-col {
@@ -591,12 +597,6 @@
             <div class="project-body">
                 <h3 class="project-title">High frequency sampling - 7.5μS</h3>
                 <p class="project-desc">Host-Target model approach in SIMULINK reduces load on the target hardware and enables faster signal sampling rates</p>
-                <ul class="project-bullets">
-                    <li>Native Simulink external mode for real-time signal sampling introduces more load on the target hardware</li>
-                    <li>A two model approach one for target and one for host reduces the load enabling high signal sampling rates</li>
-                    <li>This can give sampling rates upto 7.5μS on 7.5Mbps USART for STM32 Microcontrollers</li>
-                    <li>This project developed custom Simulink model for STM32G431 and streamed 2Mbps via USART to host</li>
-                </ul>
                 <div class="project-tags">
                     <span class="tag">STM32</span>
                     <span class="tag">SIMULINK</span>
@@ -604,6 +604,12 @@
                     <span class="tag">Embedded Coder</span>
                     <span class="tag">DSP</span>
                 </div>
+                <ul class="project-bullets">
+                    <li>Native Simulink external mode for real-time signal sampling introduces more load on the target hardware</li>
+                    <li>A two model approach one for target and one for host reduces the load enabling high signal sampling rates</li>
+                    <li>This can give sampling rates upto 7.5μS on 7.5Mbps USART for STM32 Microcontrollers</li>
+                    <li>This project developed custom Simulink model for STM32G431 and streamed 2Mbps via USART to host</li>
+                </ul>
             </div>
             <div class="project-links-col">
                 <a href="https://drive.google.com/drive/folders/1FTjoqRoatGKaQ5EluFo49dGCAi1lMlVn?usp=sharing" class="proj-link">View Files</a>
@@ -614,15 +620,9 @@
         <div class="project-item reveal">
             <span class="project-num">02</span>
             <div class="project-body">
-                <h3 class="project-title">Field Oriented Control — BLDC</h3>
-                <p class="project-desc">Speed control of BLDC motor using FOC for increased efficiency and performance. Implemented on STM32 with real-time RTOS task management.</p>
-                <ul class="project-bullets">
-                    <li>Implemented Clarke & Park transforms for real-time current vector control.</li>
-                    <li>Startup sequence runs encoder offset calibration and eccentricity calibration.</li>
-                    <li>Speed control loop(PI) runs at 1KHz and PWM at 20KHz. Motor control and safety logic runs inside ISR.</li>
-                    <li>State-machine update using FreeRTOS and rest of the application using LL_drivers.</li>
-                    <li>Segger SystemView for verifying execution time and ISR safety.</li>
-                </ul>
+                <h3 class="project-title">Field  Oriented  Control  —  FreeRTOS  +  ISR</h3>
+                <p class="project-desc">Speed control of BLDC motor using FOC for increased efficiency and performance. Implemented on STM32 with real-time state machine management on FreeRTOS 
+                    and safety critical motor control logic inside high-priority ISRs.</p>
                 <div class="project-tags">
                     <span class="tag">STM32</span>
                     <span class="tag">Embedded C</span>
@@ -633,6 +633,13 @@
                     <span class="tag">I2C</span>
                     <span class="tag">USART</span>
                 </div>
+                <ul class="project-bullets">
+                    <li>Implemented inverse Clarke & Park transforms for voltage vector control.</li>
+                    <li>Startup sequence runs "encoder offset calibration" and "eccentricity calibration"</li>
+                    <li>Speed control loop(PI) runs at 1KHz and PWM at 20KHz. Motor control and safety logic runs inside ISR.</li>
+                    <li>State-machine update using FreeRTOS and rest of the application using LL_drivers.</li>
+                    <li>Segger SystemView for verifying execution time and ISR safety.</li>
+                </ul>
             </div>
             <div class="project-links-col">
                 <a href="https://github.com/IthikkaraPakki/Closed-Loop-FOC-using-STM32G431-and-AS5600" class="proj-link">View Code - github</a>
@@ -645,16 +652,17 @@
             <div class="project-body">
                 <h3 class="project-title">Absolute Angle Sensing — AS5600</h3>
                 <p class="project-desc">Absolute angle sensors are used for sensing rotor position in closed-loop motor control applications.</p>
-                <ul class="project-bullets">
-                    <li>I2C communication with AS5600 for 12-bit absolute angle measurement</li>
-                    <li>Implemented using LL_drivers in STM32CubeIDE</li>
-                    <li>Low cost solution for position sensing applications</li>
-                </ul>
                 <div class="project-tags">
                     <span class="tag">STM32</span>
                     <span class="tag">Embedded C</span>
                     <span class="tag">AS5600</span>
                 </div>
+                <ul class="project-bullets">
+                    <li>I2C communication with AS5600 for 12-bit absolute angle measurement</li>
+                    <li>Implemented using LL_drivers in STM32CubeIDE</li>
+                    <li>Low cost solution for position sensing applications</li>
+                </ul>
+
             </div>
             <div class="project-links-col">
                 <a href="https://github.com/IthikkaraPakki/Absolute-angle-using-AS5600-STM32" class="proj-link">View Code - github</a>
@@ -666,13 +674,7 @@
          <span class="project-num">04</span>
             <div class="project-body">
                 <h3 class="project-title">Low-Side Current Sensing — 3-Phase Inverter</h3>
-                <p class="project-desc">Current sensing is required for safety in control circuits especially inverters and for torque control in BLDC motor drive applications. Implemented on B-G431-ESC1 STM32G431 evaluation board.</p>
-                <ul class="project-bullets">
-                    <li>ADC-based low-side shunt resistor current measurement on all three phases</li>
-                    <li>Current is measured exactly when low side switches are On</li>
-                    <li>ADC PWM synchronization using TRGO</li>
-
-                </ul>
+                <p class="project-desc">Current sensing is required for safety in control circuits especially inverters and for torque control in BLDC motor drive applications. Implemented on B-G431-ESC1 STM32G431 evaluation board.</p>     
                 <div class="project-tags">
                     <span class="tag">STM32</span>
                     <span class="tag">B-G431-ESC1</span>
@@ -681,6 +683,11 @@
                     <span class="tag">USART</span>
                     <span class="tag">DSP</span>
                 </div>
+                <ul class="project-bullets">
+                    <li>ADC-based low-side shunt resistor current measurement on all three phases</li>
+                    <li>Current is measured exactly when low side switches are On</li>
+                    <li>ADC PWM synchronization using TRGO</li>
+                </ul>
             </div>
             <div class="project-links-col">
                 <a href="https://github.com/IthikkaraPakki/Low-Side-Current-Sesning-on-B-G431CB-ESC1-Open-Loop-Control" class="proj-link">View Code - github</a>
