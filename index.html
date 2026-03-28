@@ -87,12 +87,13 @@
         .nav-links a:hover { color: var(--black); }
 
         /* ── HERO ── */
+/* AFTER */
         .hero {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            padding: 80px 48px 64px;
+            justify-content: center;
+            padding: calc(var(--nav-h, 73px) + 16px) 48px 64px;
             border-bottom: 1px solid var(--border);
             position: relative;
             overflow: hidden;
@@ -474,12 +475,13 @@
         .nav-links { gap: 16px; flex-wrap: wrap; }
         .nav-links a { font-size: 0.7rem; }
 
-            /* Fix whitespace — account for fixed nav height */
-            .hero {
-                min-height: calc(100vh - 50px);
-                padding: 140px 24px 48px;
-                justify-content: flex-end;
-            }
+        .hero {
+            min-height: unset;
+            height: auto;
+            padding: calc(var(--nav-h, 80px) + 32px) 24px 64px;
+            justify-content: flex-start;
+        }
+        
             .hero::before { display: none; }
 
             /* Tighten title so it doesn't overflow on desktop-mode mobile */
@@ -716,7 +718,7 @@
                     </div>
                     <span class="about-link-arrow">↗</span>
                 </a>
-                <a href="https://github.com/IthikkaraPakki?tab=repositories" target="_blank" class="about-link-row">
+                <a href="https://github.com/IthikkaraPakki" target="_blank" class="about-link-row">
                     <div class="about-link-label">
                         <span class="about-link-name">GitHub</span>
                         <span class="about-link-sub">github.com/IthikkaraPakki</span>
@@ -785,6 +787,14 @@
     setTimeout(() => {
         document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
     }, 800);
+
+    /* ── Dynamic nav height → hero padding ── */
+    function setNavHeight() {
+        const navH = document.querySelector('nav').offsetHeight;
+        document.documentElement.style.setProperty('--nav-h', navH + 'px');
+    }
+    setNavHeight();
+    window.addEventListener('resize', setNavHeight);
 </script>
 </body>
 </html>
