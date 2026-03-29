@@ -78,7 +78,7 @@
         }
 
         .nav-links a {
-            color: var(--grey);
+            color: var(--black);
             text-decoration: none;
             font-size: 0.75rem;
             letter-spacing: 0.12em;
@@ -86,6 +86,11 @@
             transition: color 0.2s;
         }
         .nav-links a:hover { color: var(--black); }
+        .nav-links a.active {
+            color: var(--black);
+            border-bottom: 1px solid var(--black);
+            padding-bottom: 2px;
+        }
 
         /* ── HERO ── */
 /* AFTER */
@@ -368,17 +373,13 @@
         }
 
         .about-avatar {
-            width: 120px; height: 120px;
+            width: 100px; height: 100px;
             border-radius: 50%;
-            background: var(--black);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--serif);
-            font-size: 2.5rem;
-            color: var(--white);
-            margin-bottom: 32px;
-            letter-spacing: -0.02em;
+            object-fit: cover;
+            display: block;
+            border: 2.5px solid var(--black);
+            float: left;
+            margin: 6px 28px 16px 0;
         }
 
         .about-text p {
@@ -420,8 +421,9 @@
         }
 
         .about-link-name {
-            font-size: 0.9rem;
-            font-family: var(--serif);
+            font-size: 1.3rem;
+            font-family: var(--sans);
+            font-weight: 600;
             letter-spacing: -0.01em;
             color: var(--black);
         }
@@ -535,7 +537,7 @@
 <nav>
     <a href="#" class="nav-name">Bilbert George</a>
     <ul class="nav-links">
-        <li><a href="#">Home</a></li>
+        <li><a href="#home">Home</a></li>
         <li><a href="#videos">Videos</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="resume.html">Resume</a></li>
@@ -545,14 +547,14 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="home">
     <p class="hero-label">Embedded Systems · Control Engineering</p>
     <h1 class="hero-title">
-        Reaching<br><em>Rocket</em><br>Science.
+        Welcome to<br><em>Bilbert's</em><br>Portfolio
     </h1>
     <div class="hero-sub">
         <p class="hero-desc">
-            Hi, I'm Bilbert. I'm a builder/engineer who loves to invent, be it in engineering or art. Welcome to my portfolio!
+            I'm a builder/engineer who loves to invent. Find more about me <a href="#about" style="color: var(--black);">here</a>
         </p>
         <a class="hero-scroll" href="#videos">
             <div class="hero-scroll-line"></div>
@@ -707,16 +709,19 @@
 
     <div class="about-grid">
         <div class="reveal">
-            <div class="about-avatar">BG</div>
+            <img src="avatar1.jpg" class="about-avatar" alt="Bilbert George">
             <div class="about-text">
-                <p>Hello! I'm an electricial engineer specializing in embedded systems and control engineering. I love working on projects that bridge the gap between software and hardware, creating intelligent systems that interact with the physical world.</p>
-                <p>My expertise lies in developing efficient embedded control software. Whether it's programming microcontrollers, designing control systems, or optimizing real-time performance, I'm always excited to tackle challenging engineering problems.</p>
-                <p>When I'm not coding or designing control systems, you can find me enjoying nature and exploring new places.</p>
+                <p>Hi! I'm an Electrical engineer focusing on embedded systems and controls engineering. I love equations that can define real world physics and math tools that are used for controlling it.</p>
+                <p>My work focuses on developing efficient embedded control software for time sensitive applications both in bare metal and in RTOS. If you're looking for someone to design a controller for your next motor control project,
+                or you want to build a high precision electromechanical joints for your humanoid or robotic arm, hit me up.</p>
+                <p>Being said that, I'm always trying to learn new things and currently exploring modelling and design of behavioral control for fixed-wing and single-rotor aircrafts.                    
+                And outside engineering and physics I also share a deep passion for art,economics and finance. So, If you have a challenging project and feels like I will be a good fit, reach out. 
+                <p>Also while I'm not designing control systems or writing code, you can find me enjoying architecture, art, and nature.</p>
             </div>
         </div>
 
         <div class="reveal" id="Connect">
-            <p class="about-right-label">Get in Touch</p>
+            <p class="about-right-label">Let's Connect</p>
             <div class="about-links">
                 <a href="https://www.linkedin.com/in/bilbert-george-85a505261" target="_blank" class="about-link-row">
                     <div class="about-link-label">
@@ -802,6 +807,27 @@
     }
     setNavHeight();
     window.addEventListener('resize', setNavHeight);
+
+    /* ── Scroll spy — highlight active nav link ── */
+    const sections = document.querySelectorAll('section[id], div[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+
+    function updateActiveNav() {
+        let current = '';
+        sections.forEach(sec => {
+            const top = sec.getBoundingClientRect().top;
+            if (top <= 120) current = sec.getAttribute('id');
+        });
+        navAnchors.forEach(a => {
+            a.classList.remove('active');
+            if (a.getAttribute('href') === '#' + current) {
+                a.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', updateActiveNav);
+    updateActiveNav();
 </script>
 </body>
 </html>
