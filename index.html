@@ -550,7 +550,7 @@
 <section class="hero" id="home">
     <p class="hero-label">Embedded Systems · Control Engineering</p>
     <h1 class="hero-title">
-        Welcome to<br><em>Bilbert's</em><br>Portfolio
+        Welcome to<br><em>Bilbert's</em><br>Portfolio.
     </h1>
     <div class="hero-sub">
         <p class="hero-desc">
@@ -597,6 +597,38 @@
         <div class="project-item reveal">
             <span class="project-num">01</span>
             <div class="project-body">
+                <h3 class="project-title">Field  Oriented  Control  —  FreeRTOS  +  ISR</h3>
+                <p class="project-desc">Speed control of BLDC motor using FOC for increased efficiency and performance. Implemented on STM32 with real-time state machine management on FreeRTOS 
+                    and safety critical motor control logic inside high-priority ISRs.</p>
+                <div class="project-tags">
+                    <span class="tag">STM32</span>
+                    <span class="tag">Embedded C</span>
+                    <span class="tag">FreeRTOS</span>
+                    <span class="tag">AS5600</span>
+                    <span class="tag">PID</span>
+                    <span class="tag">IIR Filter</span>
+                    <span class="tag">FOC</span>
+                    <span class="tag">I2C</span>
+                    <span class="tag">USART</span>
+                </div>
+                <ul class="project-bullets">
+                    <li>Implemented inverse Clarke & Park transforms for voltage vector control.</li>
+                    <li>Startup sequence runs "encoder offset calibration" and "eccentricity calibration"</li>
+                    <li>Speed control loop(PID) runs at 1KHz and PWM at 20KHz. Motor control and safety logic runs inside ISR.</li>
+                    <li>First order IIR low pass filter to isolate noise from speed calculation</li>
+                    <li>State-machine update using FreeRTOS and rest of the application using LL_drivers.</li>
+                    <li>Segger SystemView for verifying execution time and ISR safety.</li>
+                </ul>
+            </div>
+            <div class="project-links-col">
+                <a href="https://github.com/IthikkaraPakki/Closed-Loop-FOC-using-STM32G431-and-AS5600" class="proj-link">View Code - github</a>
+                <a href="https://youtu.be/2jp5XNNSbNg" class="proj-link sec">View Media</a>
+            </div>
+        </div>
+
+        <div class="project-item reveal">
+            <span class="project-num">02</span>
+            <div class="project-body">
                 <h3 class="project-title">High frequency sampling - 7.5μS</h3>
                 <p class="project-desc">Host-Target model approach in SIMULINK reduces load on the target hardware and enables faster signal sampling rates</p>
                 <div class="project-tags">
@@ -616,36 +648,6 @@
             <div class="project-links-col">
                 <a href="https://drive.google.com/drive/folders/1FTjoqRoatGKaQ5EluFo49dGCAi1lMlVn?usp=sharing" class="proj-link">View Files</a>
                 <a href="https://www.linkedin.com/posts/bilbert-george-85a505261_embeddedsystems-stm32-simulink-activity-7406237834862510080-VOck" class="proj-link sec">View Project</a>
-            </div>
-        </div>
-
-        <div class="project-item reveal">
-            <span class="project-num">02</span>
-            <div class="project-body">
-                <h3 class="project-title">Field  Oriented  Control  —  FreeRTOS  +  ISR</h3>
-                <p class="project-desc">Speed control of BLDC motor using FOC for increased efficiency and performance. Implemented on STM32 with real-time state machine management on FreeRTOS 
-                    and safety critical motor control logic inside high-priority ISRs.</p>
-                <div class="project-tags">
-                    <span class="tag">STM32</span>
-                    <span class="tag">Embedded C</span>
-                    <span class="tag">FreeRTOS</span>
-                    <span class="tag">AS5600</span>
-                    <span class="tag">PID</span>
-                    <span class="tag">FOC</span>
-                    <span class="tag">I2C</span>
-                    <span class="tag">USART</span>
-                </div>
-                <ul class="project-bullets">
-                    <li>Implemented inverse Clarke & Park transforms for voltage vector control.</li>
-                    <li>Startup sequence runs "encoder offset calibration" and "eccentricity calibration"</li>
-                    <li>Speed control loop(PI) runs at 1KHz and PWM at 20KHz. Motor control and safety logic runs inside ISR.</li>
-                    <li>State-machine update using FreeRTOS and rest of the application using LL_drivers.</li>
-                    <li>Segger SystemView for verifying execution time and ISR safety.</li>
-                </ul>
-            </div>
-            <div class="project-links-col">
-                <a href="https://github.com/IthikkaraPakki/Closed-Loop-FOC-using-STM32G431-and-AS5600" class="proj-link">View Code - github</a>
-                <a href="https://youtu.be/2jp5XNNSbNg" class="proj-link sec">View Media</a>
             </div>
         </div>
 
